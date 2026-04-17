@@ -128,10 +128,16 @@
       "pct_gap_vs_total",
       "n_departamentos",
       "gap_quality_flag"
-    ]
+    ],
+    "gapThresholdPct": {
+      "okMaxAbs": 1,
+      "warningMaxAbs": 5
+    }
   },
   "writeStrategy": {
     "mode": "upsert",
+    "defaultLoadMode": "incremental",
+    "supportsFullRefresh": true,
     "granularKey": [
       "period_date",
       "series_code"
