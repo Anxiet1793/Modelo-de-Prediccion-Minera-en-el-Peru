@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "v1",
+  "database": "mineria_peru",
+  "collections": [
+    {
+      "name": "mineria_observaciones_mensuales",
+      "description": "Hechos granulares mensuales por serie.",
+      "keyPattern": [
+        "period_date",
+        "series_code"
+      ],
+      "requiredFields": [
+        "period_date",
+        "period_yyyymm",
+        "year",
+        "month",
+        "series_code",
+        "mineral",
+        "departamento",
+        "unidad",
+        "value",
+        "schema_version"
+      ],
+      "indexes": [
+        {
+          "name": "uq_period_series",
+          "keys": {
+            "period_date": 1,
+            "series_code": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "idx_series_period",
+          "keys": {
+            "series_code": 1,
+            "period_date": 1
+          }
+        },
+        {
+          "name": "idx_mineral_depto_period",
+          "keys": {
+            "mineral": 1,
+            "departamento": 1,
+            "period_date": 1
+          }
+        },
+        {
+          "name": "idx_period",
+          "keys": {
+            "period_date": 1
+          }
+        },
+        {
+          "name": "idx_unidad_mineral_period",
+          "keys": {
+            "unidad": 1,
+            "mineral": 1,
+            "period_date": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "mineria_aggregates_mensuales",
+      "description": "Agregados materializados para consumo analitico y ML.",
+      "keyPattern": [
+        "aggregation_level",
+        "period_date",
+        "unidad",
+        "mineral",
+        "departamento"
+      ],
+      "requiredFields": [
+        "aggregation_level",
+        "period_date",
+        "period_yyyymm",
+        "year",
+        "month",
+        "unidad",
+        "schema_version"
+      ],
+      "indexes": [
+        {
+          "name": "uq_agg_period_unit_mineral_depto",
+          "keys": {
+            "aggregation_level": 1,
+            "period_date": 1,
+            "unidad": 1,
+            "mineral": 1,
+            "departamento": 1
+          },
+          "unique": true
+        },
+        {
+          "name": "idx_agg_mineral_period",
+          "keys": {
+            "aggregation_level": 1,
+            "mineral": 1,
+            "unidad": 1,
+            "period_date": 1
+          }
+        },
+        {
+          "name": "idx_agg_depto_period",
+          "keys": {
+            "aggregation_level": 1,
+            "departamento": 1,
+            "unidad": 1,
+            "period_date": 1
+          }
+        },
+        {
+          "name": "idx_gap_flag_period",
+          "keys": {
+            "gap_quality_flag": 1,
+            "period_date": 1
+          }
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "gapFields": [
+      "official_total_value",
+      "dept_sum_value",
+      "abs_gap_vs_total",
+      "pct_gap_vs_total",
+      "n_departamentos",
+      "gap_quality_flag"
+    ]
+  },
+  "writeStrategy": {
+    "mode": "upsert",
+    "granularKey": [
+      "period_date",
+      "series_code"
+    ],
+    "aggregateKey": [
+      "aggregation_level",
+      "period_date",
+      "unidad",
+      "mineral",
+      "departamento"
+    ]
+  }
+}
