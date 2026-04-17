@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# MongoDB Compass local connection profiles
+compass-connections.json
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Build and coverage
+build/
+dist/
+htmlcov/
+.coverage
+
+# Data artifacts (keep raw source files versioned by decision)
+data/interim/**
+!data/interim/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+
+# Logs and reports artifacts
+logs/**
+!logs/.gitkeep
+reports/**
+!reports/.gitkeep
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
